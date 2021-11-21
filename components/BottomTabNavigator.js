@@ -15,10 +15,11 @@ const BottomTabNavigator = () => {
   useEffect(async () => {
     let token = await SecureStore.getItemAsync("auth_token")
     setJwtToken(token)
+    //alert(token)
   })
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator>
       <Tab.Screen
         name="Home"
         component={Home}
@@ -32,7 +33,10 @@ const BottomTabNavigator = () => {
           />
         </>
       ) : (
-        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen
+          name="Login"
+          component={Login}
+        />
       )}
     </Tab.Navigator>
   );

@@ -5,7 +5,7 @@ export default function Logout({navigation}) {
 
     useEffect(async () => {
       await SecureStore.deleteItemAsync("auth_token")
-      navigation.navigate("Login")
+      navigation.navigate("Home")
     })
 
     return null;

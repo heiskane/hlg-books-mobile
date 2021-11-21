@@ -30,6 +30,7 @@ export default function Login({ navigation }) {
       navigation.navigate("Home")
     })
     .catch((err) => {
+      console.log(err)
       alert("Login failed")
     })
   }

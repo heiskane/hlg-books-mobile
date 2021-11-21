@@ -20,10 +20,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="HLG Books" component={BottomTabNavigator} />
-        <Drawer.Screen name="Login" component={Login} />
-      </Drawer.Navigator>
+      <BottomTabNavigator />
     </NavigationContainer>
   );
 }

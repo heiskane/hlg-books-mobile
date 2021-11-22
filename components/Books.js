@@ -7,7 +7,9 @@ import {
   FlatList
 } from 'react-native';
 import axios from 'axios';
+
 import Book from './Book';
+import { books } from './Styles';
 
 export default function Books({navigation}) {
   
@@ -19,27 +21,15 @@ export default function Books({navigation}) {
       .then((res) => {
         setBooks(res.data)
       })
-  })
+  }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={books.container}>
       <FlatList
-        style={styles.books}
+        style={books.books}
         data={books}
         renderItem={({item}) => <Book book={item} navigation={navigation} /> }
       />
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  books: {
-    width: '100%'
-  }
-});

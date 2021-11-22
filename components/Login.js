@@ -5,15 +5,13 @@ import * as SecureStore from 'expo-secure-store';
 
 import { AuthContext } from './AuthManager';
 
-export default function Login({ navigation, setAuth }) {
+export default function Login({ navigation }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function setAuthToken(value) {
-    await SecureStore.setItemAsync("auth_token", value)
-  }
-
+  const { setAuth } = useContext(AuthContext);
+ 
   function handleSubmit() {
 
     const formData = new FormData();
@@ -25,11 +23,9 @@ export default function Login({ navigation, setAuth }) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     })
     .then(async (res) => {
-      // https://docs.expo.dev/versions/latest/sdk/securestore/
-      setAuthToken(res.data.access_token);
+      await setAuth({token: res.data.access_token})
       setUsername("");
       setPassword("");
-      await setAuth({token: res.data.access_token})
       navigation.navigate("Home");
     })
     .catch((err) => {
@@ -40,7 +36,7 @@ export default function Login({ navigation, setAuth }) {
 
   return (
     <View style={styles.container}>
-      <Text>Logins</Text>
+      <Text>Login</Text>
       <TextInput
         style={styles.inputView}
         placeholder="username"

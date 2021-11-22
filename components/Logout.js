@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import { useEffect, useContext } from 'react';
 
-export default function Logout({navigation}) {
+import { AuthContext } from './AuthManager';
 
-    useEffect(async () => {
-      await SecureStore.deleteItemAsync("auth_token")
-      navigation.navigate("Home")
-    })
+export default function Logout({ navigation }) {
 
-    return null;
+  const { delAuth } = useContext(AuthContext);
+
+  useEffect(async () => {
+    await delAuth()
+    navigation.navigate("Home") // goBack() Instead?
+  }, [])
+
+  return null;
 
 }

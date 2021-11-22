@@ -6,46 +6,37 @@ import Home from "./Home";
 import Library from "./Library";
 import Login from "./Login";
 import Logout from "./Logout";
-import { AuthContext, AuthProvider } from './AuthManager';
+import { AuthContext } from './AuthManager';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
 
-  const [jwtToken, setJwtToken] = useState("");
-
   const { auth } = useContext(AuthContext);
 
-  console.log("TabNavigator: " + JSON.stringify(auth))
-
-  useEffect(async () => {
-    let token = await SecureStore.getItemAsync("auth_token")
-    setJwtToken(token)
-  })
+  //console.log("TabNavigator: " + JSON.stringify(auth))
 
   return (
-    <AuthProvider>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-        />
-        {auth.token ? (
-          <>
-            <Tab.Screen name="My Library" component={Library} />
-            <Tab.Screen
-              name="Logout"
-              component={Logout}
-            />
-          </>
-        ) : (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+      />
+      {auth.token ? (
+        <>
+          <Tab.Screen name="My Library" component={Library} />
           <Tab.Screen
-            name="Login"
-            component={Login}
+            name="Logout"
+            component={Logout}
           />
-        )}
-      </Tab.Navigator>
-    </AuthProvider>
+        </>
+      ) : (
+        <Tab.Screen
+          name="Login"
+          component={Login}
+        />
+      )}
+    </Tab.Navigator>
   );
 };
 

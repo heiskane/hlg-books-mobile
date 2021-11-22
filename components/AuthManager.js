@@ -8,16 +8,15 @@ import React, {
 import * as SecureStore from 'expo-secure-store';
 
 // Create a context
-const AuthContext = createContext({
-  auth: {
-    token: ""
-  }
-});
+const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuthState] = useState(initialState);
+  const [auth, setAuthState] = useState({
+    auth: {
+      token: ""
+    }
+  });
 
-  const auth_provider = useRef(null);
 
   // Get current auth state from AsyncStorage
   const getAuthState = async () => {
@@ -44,12 +43,24 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const delAuth = async () => {
+    try {
+      await SecureStore.deleteItemAsync("auth")
+      setAuthState({
+        auth: {
+          token: ""
+        }});
+    } catch (error) {
+      Promise.reject(error);
+    }
+  }
+
   useEffect(() => {
     getAuthState();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, delAuth }}>
       {children}
     </AuthContext.Provider>
   );

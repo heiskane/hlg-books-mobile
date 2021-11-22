@@ -24,6 +24,7 @@ export default function Home() {
         component={Books}
       />
       <Stack.Screen name="BookDetails" component={BookDetails} />
+      {/*<Stack.Screen name="ReadBook" component={ReadBook} /> */}
     </Stack.Navigator>
   );
 }

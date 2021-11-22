@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
 import Book from './Book';
+import { books } from './Styles';
 
 export default function Library({ navigation }) {
   
@@ -11,7 +12,7 @@ export default function Library({ navigation }) {
 
   useEffect(async () => {
     
-    let token = await SecureStore.getItemAsync("auth_token")
+    let { token } = JSON.parse(await SecureStore.getItemAsync("auth"))
 
     const instance = axios.create();
     instance.get("/profile/library/", {
@@ -22,27 +23,15 @@ export default function Library({ navigation }) {
       .then((res) => {
         setBooks(res.data)
       })
-  })
+  }, [])
   
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={books.container}>
       <FlatList
-        style={styles.books}
+        style={books.books}
         data={books}
         renderItem={({item}) => <Book book={item} navigation={navigation} /> }
       />
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  books: {
-    width: '100%'
-  }
-});

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, TextInput, View, StyleSheet, Button } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-export default function Login({ navigation }) {
+import { AuthContext } from './AuthManager';
+
+export default function Login({ navigation, setAuth }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,12 +24,13 @@ export default function Login({ navigation }) {
     instance.post("/login/", formData, {
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     })
-    .then((res) => {
+    .then(async (res) => {
       // https://docs.expo.dev/versions/latest/sdk/securestore/
-      setAuthToken(res.data.access_token)
-      setUsername("")
-      setPassword("")
-      navigation.navigate("Home")
+      setAuthToken(res.data.access_token);
+      setUsername("");
+      setPassword("");
+      await setAuth({token: res.data.access_token})
+      navigation.navigate("Home");
     })
     .catch((err) => {
       console.log(err)
@@ -37,7 +40,7 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Text>Logins</Text>
       <TextInput
         style={styles.inputView}
         placeholder="username"

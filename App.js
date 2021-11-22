@@ -5,7 +5,6 @@ import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import BottomTabNavigator from './components/BottomTabNavigator';
-import * as SecureStore from 'expo-secure-store';
 
 import Home from './components/Home';
 import Login from './components/Login';
@@ -20,7 +19,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <BottomTabNavigator />
+      {/* Drawer seems to fix the rendering after login for some reason */}
+      <Drawer.Navigator screenOptions={{ headerShown: false }}>
+        <Drawer.Screen name="test" component={BottomTabNavigator} />
+        {/*<BottomTabNavigator />*/}
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

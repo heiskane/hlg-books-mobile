@@ -3,7 +3,7 @@ import { Text, SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
-import Book from './Book';
+import BookOwned from './BookOwned';
 import { books } from './Styles';
 import { AuthContext } from './AuthManager';
 
@@ -27,11 +27,15 @@ export default function Library({ navigation }) {
   
   return (
     <SafeAreaView style={books.container}>
-      <FlatList
-        style={books.books}
-        data={books}
-        renderItem={({item}) => <Book book={item} navigation={navigation} /> }
-      />
+      {books.length == 0 ? (
+        <Text>You do not own any books.</Text>
+      ) : (
+        <FlatList
+          style={books.books}
+          data={books}
+          renderItem={({item}) => <BookOwned book={item} navigation={navigation} /> }
+        />
+      )}
     </SafeAreaView>
   )
 }

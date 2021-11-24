@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 import Home from "./Home";
 import Library from "./Library";
 import Login from "./Login";
+import Register from "./Register";
 import Logout from "./Logout";
 import { AuthContext } from './AuthManager';
 
@@ -13,8 +14,6 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
 
   const { auth } = useContext(AuthContext);
-
-  //console.log("TabNavigator: " + JSON.stringify(auth))
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -31,10 +30,16 @@ const BottomTabNavigator = () => {
           />
         </>
       ) : (
-        <Tab.Screen
-          name="Login"
-          component={Login}
-        />
+        <>
+          <Tab.Screen
+            name="Register"
+            component={Register}
+          />
+          <Tab.Screen
+            name="Login"
+            component={Login}
+          />
+        </>
       )}
     </Tab.Navigator>
   );

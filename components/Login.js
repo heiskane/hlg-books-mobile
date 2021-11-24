@@ -24,14 +24,13 @@ export default function Login({ navigation }) {
     })
     .then(async (res) => {
       await setAuth({token: res.data.access_token})
-      setUsername("");
-      setPassword("");
       navigation.navigate("Home");
     })
     .catch((err) => {
       console.log(err)
       alert("Login failed")
     })
+    setPassword("");
   }
 
   return (

@@ -15,42 +15,51 @@ import {
   CardImage
 } from 'react-native-material-cards'
 import axios from 'axios';
-export default function Book({book, navigation}) {
 
-  return (
-    {/* https://github.com/SiDevesh/React-Native-Material-Cards/issues/19 */},
-    <TouchableOpacity
-      onPress={() => navigation.navigate('BookDetails', {book: book})}
-    >
-      <Card style={styles.book}>
-        <CardImage
-          style={styles.image}
-          resizeMode="contain"
-          source={{ uri: `${axios.defaults.baseURL}/books/${book.id}/image/`}}
-        />
-        <CardTitle
-          title={book.title}
-          subtitle={book.genres[0].name}
-        />
-        <CardContent text={book.description} />
-        <CardContent text={'Price: ' + book.price + '€'} />
-        <CardAction
-          separator={true}
-          inColumn={false}
-        >
-          <CardButton
-            onPress={() => navigation.navigate('ReadBook', {book: book})}
-            title="Read?"
-            color="blue"
+// Use pure component for better performance
+export default class Book extends React.PureComponent {
+
+  // ({book, this.props.navigation})
+
+  render() {
+
+    return (
+      {/* https://github.com/SiDevesh/React-Native-Material-Cards/issues/19 */},
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate('BookDetails', {book: this.props.book})}
+      >
+        <Card style={styles.book}>
+          <CardImage
+            style={styles.image}
+            resizeMode="contain"
+            source={{ uri: `${axios.defaults.baseURL}/books/${this.props.book.id}/image/`}}
           />
-          <CardButton
-            title="Add to Cart?"
-            color="blue"
+          <CardTitle
+            title={this.props.book.title}
+            subtitle={this.props.book.genres[0].name}
           />
-        </CardAction>
-      </Card>
-    </TouchableOpacity>
-  )
+          <CardContent text={this.props.book.description} />
+          <CardContent text={'Price: ' + this.props.book.price + '€'} />
+          <CardAction
+            separator={true}
+            inColumn={false}
+          >
+            {this.props.book.price == 0 &&
+              <CardButton
+                onPress={() => this.props.navigation.navigate('ReadBook', {book: this.props.book})}
+                title="Read"
+                color="blue"
+              />
+            }
+            <CardButton
+              title="Add to Cart?"
+              color="blue"
+            />
+          </CardAction>
+        </Card>
+      </TouchableOpacity>
+    )
+  }
 
 }
 

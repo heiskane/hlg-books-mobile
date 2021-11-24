@@ -28,7 +28,9 @@ export default function Books({navigation}) {
       <FlatList
         style={books.books}
         data={books}
-        renderItem={({item}) => <Book book={item} navigation={navigation} /> }
+        renderItem={({item}) =>
+          <Book book={item} navigation={navigation} />
+        }
       />
     </SafeAreaView>
   )

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
 import Book from './Book';
 import { books } from './Styles';
+import { AuthContext } from './AuthManager';
 
 export default function Library({ navigation }) {
   
   const [books, setBooks] = useState([]);
-
+  const { auth } = useContext(AuthContext);
+  
   useEffect(async () => {
     
-    let { token } = JSON.parse(await SecureStore.getItemAsync("auth"))
-
     const instance = axios.create();
     instance.get("/profile/library/", {
       headers: {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + auth.token
       }
     })
       .then((res) => {

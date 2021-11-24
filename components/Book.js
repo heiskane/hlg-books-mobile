@@ -39,7 +39,7 @@ export default function Book({book, navigation}) {
           inColumn={false}
         >
           <CardButton
-            onPress={() => alert("To be implemented later")}
+            onPress={() => navigation.navigate('ReadBook', {book: book})}
             title="Read?"
             color="blue"
           />

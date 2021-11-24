@@ -17,7 +17,7 @@ const BottomTabNavigator = () => {
   //console.log("TabNavigator: " + JSON.stringify(auth))
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="Home"
         component={Home}

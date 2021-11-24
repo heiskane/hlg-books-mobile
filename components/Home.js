@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator();
 export default function Home() {
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
       <Stack.Screen
         name="Books"
         component={Books}

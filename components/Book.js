@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,31 +15,13 @@ import {
   CardImage
 } from 'react-native-material-cards'
 import axios from 'axios';
-import { PermissionsAndroid } from 'react-native';
 
+import { AuthContext } from './AuthManager';
 import { download_book } from './DownloadBook';
+
 
 // Use pure component for better performance
 export default class Book extends React.PureComponent {
-
-  handleDownload = async () => {
-
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      {
-        title: "Tile for request",
-        message: "Message for request",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-      }
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("Permissions Granted")
-    } else {
-      console.log("Permissions denied")
-    }
-    download_book(this.props.book)
-  }
 
   render() {
 
@@ -72,7 +54,7 @@ export default class Book extends React.PureComponent {
                   color="blue"
                 />
                 <CardButton
-                  onPress={() => download_book(this.props.book)}
+                  onPress={() => download_book(this.props.book, this.context.auth)}
                   title="Download"
                   color="blue"
                 />
@@ -89,6 +71,8 @@ export default class Book extends React.PureComponent {
   }
 
 }
+
+Book.contextType = AuthContext;
 
 const styles = StyleSheet.create({
   book: {

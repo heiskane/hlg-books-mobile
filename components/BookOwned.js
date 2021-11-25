@@ -17,8 +17,11 @@ import {
 import axios from 'axios';
 
 import { book_card } from './Styles';
+import { AuthContext } from './AuthManager';
+import { download_book } from './DownloadBook';
 
-export default class Book extends React.PureComponent {
+
+export default class BookOwned extends React.PureComponent {
 
   render() {
     return (
@@ -47,11 +50,16 @@ export default class Book extends React.PureComponent {
               title="Read"
               color="blue"
             />
+            <CardButton
+              onPress={() => download_book(this.props.book, this.context.auth)}
+              title="Download"
+              color="blue"
+            />
           </CardAction>
         </Card>
       </TouchableOpacity>
     )
   }
-
-
 }
+
+BookOwned.contextType = AuthContext;

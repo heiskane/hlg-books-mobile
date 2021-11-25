@@ -1,7 +1,9 @@
-import RNFetchBlob from 'rn-fetch-blob'
+import axios from 'axios';
+import RNFetchBlob from 'rn-fetch-blob';
 import { PermissionsAndroid } from 'react-native';
 
-export async function download_book(book) {
+
+export async function download_book(book, auth) {
 
   const granted = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -17,7 +19,10 @@ export async function download_book(book) {
     // send http request in a new thread (using native code)
     
     let dirs = RNFetchBlob.fs.dirs
+    
     const android = RNFetchBlob.android
+    const instance = axios.create();
+
 
     RNFetchBlob.config({
       //fileCache: true,
@@ -30,9 +35,8 @@ export async function download_book(book) {
         mediaScannable: true,
       }
     })
-      .fetch('GET', 'http://12a5-86-115-55-28.ngrok.io/books/1/download/', {
-        // Authorization : 'Bearer access-token...',
-        // more headers  ..
+      .fetch('GET', `${axios.defaults.baseURL}/books/${book.id}/download/`, {
+        'Authorization': `Bearer ${auth.token}`
       })
       .then((res) => {
         console.log("Saved to: " + res.path())

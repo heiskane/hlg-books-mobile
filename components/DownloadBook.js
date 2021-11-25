@@ -17,15 +17,17 @@ export async function download_book(book) {
     // send http request in a new thread (using native code)
     
     let dirs = RNFetchBlob.fs.dirs
-    
+    const android = RNFetchBlob.android
+
     RNFetchBlob.config({
-      fileCache: true,
+      //fileCache: true,
       path: dirs.DownloadDir + `/${book.title}.pdf`,
       addAndroidDownloads: {
         useDownloadsManager: true,
         notifications: true,
-        description: book.description,
         title: book.title,
+        description: book.description,
+        mediaScannable: true,
       }
     })
       .fetch('GET', 'http://12a5-86-115-55-28.ngrok.io/books/1/download/', {
@@ -34,7 +36,8 @@ export async function download_book(book) {
       })
       .then((res) => {
         console.log("Saved to: " + res.path())
-        alert("File saved as " + res.path())
+        //alert("File saved as " + res.path())
+        android.actionViewIntent(res.path(), 'application/pdf')
       })
       // Something went wrong:
       .catch((errorMessage, statusCode) => {

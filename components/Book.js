@@ -72,7 +72,7 @@ export default class Book extends React.PureComponent {
                   color="blue"
                 />
                 <CardButton
-                  onPress={this.handleDownload}
+                  onPress={() => download_book(this.props.book)}
                   title="Download"
                   color="blue"
                 />

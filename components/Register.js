@@ -53,7 +53,7 @@ export default function Register({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry={true}
       />
-      <Button onPress={handleSubmit} title="Login" />
+      <Button onPress={handleSubmit} title="Register" />
     </View>
   )
 

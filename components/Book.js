@@ -15,11 +15,31 @@ import {
   CardImage
 } from 'react-native-material-cards'
 import axios from 'axios';
+import { PermissionsAndroid } from 'react-native';
+
+import { download_book } from './DownloadBook';
 
 // Use pure component for better performance
 export default class Book extends React.PureComponent {
 
-  // ({book, this.props.navigation})
+  handleDownload = async () => {
+
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        title: "Tile for request",
+        message: "Message for request",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("Permissions Granted")
+    } else {
+      console.log("Permissions denied")
+    }
+    download_book(this.props.book)
+  }
 
   render() {
 
@@ -45,11 +65,18 @@ export default class Book extends React.PureComponent {
             inColumn={false}
           >
             {this.props.book.price == 0 &&
-              <CardButton
-                onPress={() => this.props.navigation.navigate('ReadBook', {book: this.props.book})}
-                title="Read"
-                color="blue"
-              />
+              <>
+                <CardButton
+                  onPress={() => this.props.navigation.navigate('ReadBook', {book: this.props.book})}
+                  title="Read"
+                  color="blue"
+                />
+                <CardButton
+                  onPress={this.handleDownload}
+                  title="Download"
+                  color="blue"
+                />
+              </>
             }
             <CardButton
               title="Add to Cart?"

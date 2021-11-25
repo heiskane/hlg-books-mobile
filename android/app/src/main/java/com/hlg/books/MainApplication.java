@@ -7,9 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.ReactNativeBlobUtil.ReactNativeBlobUtilPackage;
-import com.ReactNativeBlobUtil.ReactNativeBlobUtilPackage;
-import com.ReactNativeBlobUtil.ReactNativeBlobUtilPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.ReactNativeBlobUtil.ReactNativeBlobUtilPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;

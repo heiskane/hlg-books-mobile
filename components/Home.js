@@ -13,6 +13,9 @@ import axios from 'axios';
 import Books from './Books';
 import BookDetails from './BookDetails';
 import ReadBook from './ReadBook';
+import Library from './Library';
+import TestWebView from './TestWebView';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +29,7 @@ export default function Home() {
       />
       <Stack.Screen name="BookDetails" component={BookDetails} />
       <Stack.Screen name="ReadBook" component={ReadBook} />
+      <Stack.Screen name="TestWebView" component={TestWebView} />
     </Stack.Navigator>
   );
 }

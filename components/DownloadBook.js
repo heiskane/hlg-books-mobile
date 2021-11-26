@@ -24,7 +24,7 @@ export async function download_book(book, auth) {
     const instance = axios.create();
 
 
-    RNFetchBlob.config({
+    let task = RNFetchBlob.config({
       //fileCache: true,
       path: dirs.DownloadDir + `/${book.title}.pdf`,
       addAndroidDownloads: {
@@ -39,6 +39,7 @@ export async function download_book(book, auth) {
         'Authorization': `Bearer ${auth.token}`
       })
       .then((res) => {
+        // TODO: Figure out how to cancel download when unauthorized
         console.log("Saved to: " + res.path())
         //alert("File saved as " + res.path())
         android.actionViewIntent(res.path(), 'application/pdf')

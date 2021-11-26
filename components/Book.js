@@ -18,6 +18,7 @@ import axios from 'axios';
 
 import { AuthContext } from './AuthManager';
 import { download_book } from './DownloadBook';
+import TestWebView from './TestWebView';
 
 
 // Use pure component for better performance
@@ -49,7 +50,9 @@ export default class Book extends React.PureComponent {
             {this.props.book.price == 0 &&
               <>
                 <CardButton
-                  onPress={() => this.props.navigation.navigate('ReadBook', {book: this.props.book})}
+                  onPress={() => {
+                    this.props.navigation.navigate('ReadBook', {book: this.props.book})
+                  }}
                   title="Read"
                   color="blue"
                 />
@@ -61,6 +64,7 @@ export default class Book extends React.PureComponent {
               </>
             }
             <CardButton
+              onPress={() => this.props.navigation.navigate('TestWebView')}
               title="Add to Cart?"
               color="blue"
             />

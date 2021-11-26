@@ -5,15 +5,16 @@ import axios from 'axios';
 
 import { AuthContext } from './AuthManager';
 
-export default function TestWebView() {
+export default function PayPalWebView({route}) {
 
   const [approveLink, setApproveLink] = useState("");
   const { auth } = useContext(AuthContext);
+  const { book } = route.params;
 
   useEffect(() => {
     const instance = axios.create();
     instance.post('/checkout/paypal/order/create/', {
-      book_ids: [10, 11],
+      book_ids: [book.id],
     },
     {
       headers: {

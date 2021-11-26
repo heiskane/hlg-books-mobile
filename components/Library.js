@@ -12,8 +12,7 @@ export default function Library({ navigation }) {
   const [books, setBooks] = useState([]);
   const { auth } = useContext(AuthContext);
   
-  useEffect(async () => {
-    
+  function fetch_books() {
     const instance = axios.create();
     instance.get("/profile/library/", {
       headers: {
@@ -23,6 +22,14 @@ export default function Library({ navigation }) {
       .then((res) => {
         setBooks(res.data)
       })
+  }
+
+  useEffect(async () => {
+    fetch_books();
+    const willFocusSubscription = navigation.addListener('focus', () => {
+      fetch_books();
+    })
+    return willFocusSubscription;
   }, [])
   
   return (

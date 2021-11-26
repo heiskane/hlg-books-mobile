@@ -18,7 +18,7 @@ import axios from 'axios';
 
 import { AuthContext } from './AuthManager';
 import { download_book } from './DownloadBook';
-import TestWebView from './TestWebView';
+import PayPalWebView from './PayPalWebView';
 
 
 // Use pure component for better performance
@@ -47,7 +47,7 @@ export default class Book extends React.PureComponent {
             separator={true}
             inColumn={false}
           >
-            {this.props.book.price == 0 &&
+            {this.props.book.price == 0 ? (
               <>
                 <CardButton
                   onPress={() => {
@@ -62,12 +62,16 @@ export default class Book extends React.PureComponent {
                   color="blue"
                 />
               </>
+            ) : (
+              <CardButton
+                onPress={() => {
+                  this.props.navigation.navigate('PayPalWebView', {book: this.props.book})
+                }}
+                title="Buy"
+                color="blue"
+              />
+            )
             }
-            <CardButton
-              onPress={() => this.props.navigation.navigate('TestWebView')}
-              title="Add to Cart?"
-              color="blue"
-            />
           </CardAction>
         </Card>
       </TouchableOpacity>

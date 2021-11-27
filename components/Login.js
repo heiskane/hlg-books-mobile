@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, TextInput, View, StyleSheet, Button } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Button, Alert } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
     })
     .catch((err) => {
       console.log(err)
-      alert("Login failed")
+      Alert.alert("Error", "Login failed")
     })
     setPassword("");
   }

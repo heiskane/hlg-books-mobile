@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
+import { Text, View, TextInput, Button, Alert } from 'react-native';
 import axios from 'axios';
 
 import { AuthContext } from './AuthManager'
@@ -27,7 +27,7 @@ export default function Register({ navigation }) {
     })
     .catch((err) => {
       console.log(err)
-      alert("Registration failed")
+      Alert.alert("Error", "Registration failed for whatever reason... Maybe I'll add a more helpful message later")
     })
   }
 

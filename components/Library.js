@@ -26,6 +26,7 @@ export default function Library({ navigation }) {
 
   useEffect(async () => {
     fetch_books();
+    // Refresh page everytime its opened
     const willFocusSubscription = navigation.addListener('focus', () => {
       fetch_books();
     })

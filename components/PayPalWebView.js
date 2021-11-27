@@ -1,11 +1,11 @@
 import React, { Component, useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Viewm } from 'react-native';
 import { WebView } from 'react-native-webview';
 import axios from 'axios';
 
 import { AuthContext } from './AuthManager';
 
-export default function PayPalWebView({route}) {
+export default function PayPalWebView({route, navigation}) {
 
   const [approveLink, setApproveLink] = useState("");
   const { auth } = useContext(AuthContext);

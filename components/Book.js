@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import {
   Card,
@@ -23,6 +24,32 @@ import PayPalWebView from './PayPalWebView';
 
 // Use pure component for better performance
 export default class Book extends React.PureComponent {
+
+  buy_book = () => {
+    // Allow only logged in users to buy
+    if (!this.context.auth.token) {
+      Alert.alert(
+        "Not logged in",
+        "You need to be logged in to buy books",
+        [
+          {
+            text: "Login",
+            onPress: () => this.props.navigation.navigate("Login")
+          },
+          {
+            text: "Register",
+            onPress: () => this.props.navigation.navigate("Register")
+          },
+          {
+            text: "Cancel",
+            onPress: () => console.log("Canceled")
+          }
+        ]
+      )
+    } else {
+      this.props.navigation.navigate('PayPalWebView', {book: this.props.book})
+    }
+  }
 
   render() {
 
@@ -64,9 +91,7 @@ export default class Book extends React.PureComponent {
               </>
             ) : (
               <CardButton
-                onPress={() => {
-                  this.props.navigation.navigate('PayPalWebView', {book: this.props.book})
-                }}
+                onPress={this.buy_book}
                 title="Buy"
                 color="blue"
               />

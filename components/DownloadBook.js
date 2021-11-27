@@ -25,11 +25,12 @@ export async function download_book(book, auth) {
 
 
     let task = RNFetchBlob.config({
-      //fileCache: true,
+      fileCache: true,
       path: dirs.DownloadDir + `/${book.title}.pdf`,
       addAndroidDownloads: {
         useDownloadsManager: true,
         notifications: true,
+        //path: dirs.DownloadDir + `/${book.title}.pdf`,
         title: book.title,
         description: book.description,
         mediaScannable: true,

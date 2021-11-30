@@ -29,6 +29,10 @@ export const books = StyleSheet.create({
   detailed_subtitle: {
     backgroundColor: '#DDD',
     padding: 2,
+    fontWeight: 'bold'
+  },
+  detailed_text: {
+    padding: 7
   },
   books: {
     width: '100%',

@@ -13,14 +13,25 @@ import { books } from './Styles';
 
 export default function Books({navigation}) {
   
+  const [refreshing, setRefreshing] = useState(false);
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
+  function fetch_books() {
     const instance = axios.create();
     instance.get("/async_books/")
       .then((res) => {
         setBooks(res.data)
+        setRefreshing(false);
       })
+  }
+
+  function on_refresh() {
+    fetch_books();
+    setRefreshing(true);
+  }
+
+  useEffect(() => {
+    fetch_books();
   }, [])
 
   return (
@@ -28,6 +39,8 @@ export default function Books({navigation}) {
       <FlatList
         style={books.books}
         data={books}
+        onRefresh={on_refresh}
+        refreshing={refreshing}
         renderItem={({item}) =>
           <Book book={item} navigation={navigation} />
         }

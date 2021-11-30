@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 import { AuthContext } from './AuthManager';
+import { forms } from './Styles';
 
 export default function Login({ navigation }) {
 
@@ -34,16 +35,16 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
+    <View style={forms.container}>
+      <Text style={forms.form_title}>Login</Text>
       <TextInput
-        style={styles.inputView}
+        style={forms.inputView}
         placeholder="username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={styles.inputView}
+        style={forms.inputView}
         placeholder="password"
         value={password}
         onChangeText={setPassword}
@@ -54,21 +55,3 @@ export default function Login({ navigation }) {
   )
 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputView: {
-    backgroundColor: "#DDD",
-    borderRadius: 25,
-    width: "65%",
-    height: 50,
-    marginBottom: 20,
-    alignItems: "center",
-    padding: 15
-  }
-});

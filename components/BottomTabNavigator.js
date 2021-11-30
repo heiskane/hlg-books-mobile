@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from 'react-native-vector-icons/Feather';
 import * as SecureStore from 'expo-secure-store';
 
 import Home from "./Home";
@@ -16,7 +17,22 @@ const BottomTabNavigator = () => {
   const { auth } = useContext(AuthContext);
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={({route}) => ({
+      headerShown: false,
+      tabBarIcon: ({focused, color, size}) => {
+        if (route.name === 'Home') {
+          return <Icon name="home" size={size} color={color} />
+        } else if (route.name === 'Register') {
+          return <Icon name="user-plus" size={size} color={color} />
+        } else if (route.name === 'Login') {
+          return <Icon name="user" size={size} color={color} />
+        } else if (route.name === 'Logout') {
+          return <Icon name="user-x" size={size} color={color} />
+        } else if (route.name === 'My Library') {
+          return <Icon name="archive" size={size} color={color} />
+        }
+      }
+    })}>
       <Tab.Screen
         name="Home"
         component={Home}

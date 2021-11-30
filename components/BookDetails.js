@@ -20,10 +20,16 @@ export default function BookDetails({route}) {
       />
       <View style={books.detailed_info}>
         <Text style={books.detailed_title}>{book.title}</Text>
-        <Text>Description: {book.description}</Text>
-        <Text>Language: {book.language}</Text>
-        <Text>Publication Date: {book.publication_date}</Text>
-        <Text>Price: {book.price}€</Text>
+        <Text style={books.detailed_subtitle}>Genre</Text>
+        <Text>{book.genres[0].name}</Text>
+        <Text style={books.detailed_subtitle}>Description</Text>
+        <Text>{book.description}</Text>
+        <Text style={books.detailed_subtitle}>Language</Text>
+        <Text>{book.language}</Text>
+        <Text style={books.detailed_subtitle}>Publication Date</Text>
+        <Text>{book.publication_date}</Text>
+        <Text style={books.detailed_subtitle}>Price</Text>
+        <Text>{book.price}€</Text>
       </View>
     </View>
   )

@@ -33,7 +33,7 @@ export default function Register({ navigation }) {
 
   return (
     <View style={forms.container}>
-      <Text>Register</Text>
+      <Text style={forms.form_title}>Register</Text>
       <TextInput
         style={forms.inputView}
         placeholder="username"

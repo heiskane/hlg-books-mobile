@@ -5,20 +5,16 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  Button,
+  ActivityIndicator
 } from 'react-native';
-import {
-  Card,
-  CardTitle,
-  CardContent,
-  CardAction,
-  CardButton,
-  CardImage
-} from 'react-native-material-cards'
+import { Card } from 'react-native-elements'
 import axios from 'axios';
 
 import { AuthContext } from './AuthManager';
 import { download_book } from './DownloadBook';
+import { book_card } from './Styles';
 import PayPalWebView from './PayPalWebView';
 
 
@@ -58,46 +54,40 @@ export default class Book extends React.PureComponent {
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate('BookDetails', {book: this.props.book})}
       >
-        <Card style={styles.book}>
-          <CardImage
-            style={styles.image}
-            resizeMode="contain"
+        <Card style={book_card.book}>
+          <Card.Image
+            style={book_card.image}
+            PlaceholderContent={
+              <ActivityIndicator size="large" color="#0000ff"/>
+            }
             source={{ uri: `${axios.defaults.baseURL}/books/${this.props.book.id}/image/`}}
           />
-          <CardTitle
-            title={this.props.book.title}
-            subtitle={this.props.book.genres[0].name}
-          />
-          <CardContent text={this.props.book.description} />
-          <CardContent text={'Price: ' + this.props.book.price + '€'} />
-          <CardAction
-            separator={true}
-            inColumn={false}
-          >
-            {this.props.book.price == 0 ? (
-              <>
-                <CardButton
-                  onPress={() => {
-                    this.props.navigation.navigate('ReadBook', {book: this.props.book})
-                  }}
-                  title="Read"
-                  color="blue"
-                />
-                <CardButton
-                  onPress={() => download_book(this.props.book, this.context.auth)}
-                  title="Download"
-                  color="blue"
-                />
-              </>
-            ) : (
-              <CardButton
-                onPress={this.buy_book}
-                title="Buy"
-                color="blue"
+          <Card.Title style={book_card.title}>{this.props.book.title}</Card.Title>
+          <Text style={book_card.description}>{this.props.book.description}</Text>
+          <Text style={book_card.price}>{this.props.book.price + '€'}</Text>
+          {this.props.book.price == 0 ? (
+            <View style={book_card.buttons}>
+              <Button
+                onPress={() => {
+                  this.props.navigation.navigate('ReadBook', {book: this.props.book})
+                }}
+                title="Read"
+                color="#1976D2"
+                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
               />
-            )
-            }
-          </CardAction>
+              <Button
+                onPress={() => download_book(this.props.book, this.context.auth)}
+                title="Download"
+                color="#1976D2"
+              />
+            </View>
+          ) : (
+            <Button
+              onPress={this.buy_book}
+              title="Buy"
+              color="#1976D2"
+            />
+          )}
         </Card>
       </TouchableOpacity>
     )
@@ -106,17 +96,3 @@ export default class Book extends React.PureComponent {
 }
 
 Book.contextType = AuthContext;
-
-const styles = StyleSheet.create({
-  book: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#000',
-    borderWidth: 1
-  },
-  image: {
-    backgroundColor: '#fff'
-  }
-});

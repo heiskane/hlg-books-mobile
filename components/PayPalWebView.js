@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, Viewm } from 'react-native';
+import { ActivityIndicator, Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
 import axios from 'axios';
 
@@ -7,9 +7,13 @@ import { AuthContext } from './AuthManager';
 
 export default function PayPalWebView({route, navigation}) {
 
+  const [loading, setLoading] = useState(true);
   const [approveLink, setApproveLink] = useState("");
   const { auth } = useContext(AuthContext);
   const { book } = route.params;
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     const instance = axios.create();
@@ -33,6 +37,26 @@ export default function PayPalWebView({route, navigation}) {
 
 
   return (
-    <WebView source={{uri: approveLink}} />
+    <>
+      <WebView
+        onLoad={() => setLoading(false)}
+        source={{uri: approveLink}} />
+      {loading && (
+        <ActivityIndicator
+          style={{
+// https://stackoverflow.com/questions/44046500/how-do-i-overlay-activityindicator-in-react-native
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          size="large"
+          color="#1976D2"
+        />
+      )}
+    </>
   )
 }

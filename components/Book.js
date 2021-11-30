@@ -54,7 +54,7 @@ export default class Book extends React.PureComponent {
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate('BookDetails', {book: this.props.book})}
       >
-        <Card style={book_card.book}>
+        <Card>
           <Card.Image
             style={book_card.image}
             PlaceholderContent={

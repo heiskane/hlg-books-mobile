@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, SafeAreaView, FlatList, StyleSheet } from 'react-native';
+import { Text, SafeAreaView, FlatList, StyleSheet, View, Dimensions } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { ActivityIndicator } from "react-native";
@@ -13,7 +13,9 @@ export default function Library({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const { auth } = useContext(AuthContext);
-  
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
   function fetch_books() {
     const instance = axios.create();
     instance.get("/profile/library/", {
@@ -38,7 +40,17 @@ export default function Library({ navigation }) {
   
   function RenderBooks() {
       if (books.length <= 0) {
-        return <Text>You do not own any books.</Text>
+        return (
+          <View style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingTop: 20
+          }}>
+            <Text style={{
+              fontSize: 20
+            }}>You do not own any books.</Text>
+          </View>
+        )
       }
       return  <FlatList
           style={books.books}
@@ -48,12 +60,26 @@ export default function Library({ navigation }) {
   }
 
   return (
+    <>
     <SafeAreaView style={books.container}>
-    {isLoading ?
-      <ActivityIndicator size="large" color="#00ff00" />
-      :
       <RenderBooks />
-    }
     </SafeAreaView>
+    {isLoading &&
+      <ActivityIndicator
+        style={{
+          position: 'absolute',
+          backgroundColor: '#fff',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        size="large"
+        color="#0000ff"
+        />
+    }
+    </>
   )
 }

@@ -4,16 +4,11 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
+  Button
 } from 'react-native';
-import {
-  Card,
-  CardTitle,
-  CardContent,
-  CardAction,
-  CardButton,
-  CardImage
-} from 'react-native-material-cards'
+import { Card } from 'react-native-elements'
 import axios from 'axios';
 
 import { book_card } from './Styles';
@@ -30,32 +25,30 @@ export default class BookOwned extends React.PureComponent {
         onPress={() => this.props.navigation.navigate('BookDetails', {book: this.props.book})}
       >
         <Card style={book_card.book}>
-          <CardImage
+          <Card.Image
             style={book_card.image}
-            resizeMode="contain"
+            PlaceholderContent={
+              <ActivityIndicator size="large" color="#0000ff"/>
+            }
             source={{ uri: `${axios.defaults.baseURL}/books/${this.props.book.id}/image/`}}
           />
-          <CardTitle
-            title={this.props.book.title}
-            subtitle={this.props.book.genres[0].name}
-          />
-          <CardContent text={this.props.book.description} />
-          <CardContent text={'Price: ' + this.props.book.price + '€'} />
-          <CardAction
-            separator={true}
-            inColumn={false}
-          >
-            <CardButton
-              onPress={() => this.props.navigation.navigate('ReadBook', {book: this.props.book})}
+          <Card.Title style={book_card.title}>{this.props.book.title}</Card.Title>
+          <Text style={book_card.description}>{this.props.book.description}</Text>
+          <View style={book_card.buttons}>
+            <Button
+              onPress={() => {
+                this.props.navigation.navigate('ReadBook', {book: this.props.book})
+              }}
               title="Read"
-              color="blue"
+              color="#1976D2"
+              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
             />
-            <CardButton
+            <Button
               onPress={() => download_book(this.props.book, this.context.auth)}
               title="Download"
-              color="blue"
+              color="#1976D2"
             />
-          </CardAction>
+          </View>
         </Card>
       </TouchableOpacity>
     )

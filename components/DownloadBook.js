@@ -30,7 +30,7 @@ export async function download_book(book, auth) {
       addAndroidDownloads: {
         useDownloadsManager: true,
         notifications: true,
-        //path: dirs.DownloadDir + `/${book.title}.pdf`,
+        path: dirs.DownloadDir + `/${book.title}.pdf`,
         title: book.title,
         description: book.description,
         mediaScannable: true,
